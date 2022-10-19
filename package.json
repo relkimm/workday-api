@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "ts-node src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/relkimm/workday-api/issues"
   },
-  "homepage": "https://github.com/relkimm/workday-api#readme"
+  "homepage": "https://github.com/relkimm/workday-api#readme",
+  "dependencies": {
+    "fastify": "^4.9.2",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.2",
+    "typescript": "^4.8.4"
+  }
 }
