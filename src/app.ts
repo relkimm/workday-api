@@ -1,13 +1,22 @@
+import "./config";
+import AppConfig from "./config";
 import fastify, { FastifyListenOptions } from "fastify";
+import { getHolidayClient } from "./external/holiday/api";
 
 const app = fastify();
+const appConfig = AppConfig();
 
 const options: FastifyListenOptions = {
-  port: 3000,
+  port: appConfig.port,
 };
 
-app.get("/", (request, reply) => {
-  reply.send("Hello workday!");
+app.get("/", async (request, reply) => {
+  const holidayClient = getHolidayClient();
+  const result = await holidayClient.getHolidays({
+    year: 2022,
+    limit: 100,
+  });
+  reply.send(result);
 });
 
 app.listen(options, (error, address) => {
