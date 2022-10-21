@@ -21,5 +21,5 @@ app.get("/", async (request, reply) => {
 });
 
 app.listen(options, (error, address) => {
-  console.log(`App is running on PORT ${options.port}`);
+  console.log(`App is running on ${options.host}:${options.port}`);
 });

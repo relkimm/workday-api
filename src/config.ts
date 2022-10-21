@@ -11,7 +11,7 @@ interface AppConfig {
 }
 
 const appConfig: AppConfig = {
-  host: process.env.host || "localhost",
+  host: process.env.HOST || "localhost",
   port: Number(process.env.PORT) || 3000,
   openApi: {
     url: process.env.OPEN_API_URL || "",
