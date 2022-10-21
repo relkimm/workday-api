@@ -1,14 +1,15 @@
 import { FastifyPluginCallback } from "fastify";
-import { plusDate } from "../../shared/util/date";
+import { getWorkdayCalculator } from "../../core/workday/service/calculator";
 import { PlusRequest } from "./request/plus.request";
 
 const workdayRoutes: FastifyPluginCallback = async (fastify, opts) => {
   fastify.get("/plus", (request: PlusRequest, reply) => {
     const { date, plus } = request.query;
-    const calculatedDate = plusDate(new Date(date), Number(plus));
+    const workdayCalculator = getWorkdayCalculator();
+    const calculated = workdayCalculator.plus(new Date(date), Number(plus));
 
     return reply.send({
-      date: calculatedDate,
+      date: calculated,
     });
   });
 };

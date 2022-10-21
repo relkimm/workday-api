@@ -5,8 +5,8 @@ export function isWeekend(date: Date) {
   return weekendValues.some((weekendValue) => weekendValue === dayOfWeek);
 }
 
-export function plusDate(date: Date, plus: number) {
+export function plusDays(date: Date, days: number) {
   const next = new Date(date);
-  next.setDate(date.getDate() + plus);
+  next.setDate(date.getDate() + days);
   return next;
 }
