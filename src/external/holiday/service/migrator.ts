@@ -1,8 +1,8 @@
 import { Holiday, PrismaClient } from "@prisma/client";
+import { CreateData } from "../../../shared/type/prisma";
+import { isWeekend } from "../../../shared/util/date";
 import { getHolidayClient } from "../api";
 import { HolidayItemResponse, parseLocdate } from "../api/model";
-
-type HolidayCreateData = Omit<Holiday, "id">;
 
 function HolidayMigrator() {
   const prisma = new PrismaClient();
@@ -16,32 +16,41 @@ function HolidayMigrator() {
       })
       .then(async (response) => {
         const { item } = response.response.body.items;
-        const createData = mapToCreate(item);
+        const createData = getCreateData(item);
 
-        const result = await prisma.holiday.createMany({
-          data: createData,
-        });
-
-        console.info("result", result);
+        prisma.holiday
+          .createMany({
+            data: createData,
+            skipDuplicates: true,
+          })
+          .then((result) => {
+            console.info(
+              "Migration of Holiday Data is Success.",
+              "result:",
+              result
+            );
+          })
+          .catch((error) => {
+            console.error(
+              "Migration of Holiday Data is Failed.",
+              "error:",
+              error
+            );
+          });
       });
   }
 
-  function mapToCreate(items: HolidayItemResponse[]): HolidayCreateData[] {
+  function getCreateData(items: HolidayItemResponse[]): CreateData<Holiday>[] {
     return items.map((item) => {
       const { dateName, locdate } = item;
-
-      const date = parseLocdate(locdate);
-      const year = date.getFullYear();
-      const month = date.getMonth() + 1;
-      const dayOfWeek = date.getDay();
-      const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+      const holidayDate = parseLocdate(locdate);
 
       return {
         name: dateName,
-        year,
-        month,
-        date,
-        isWeekend,
+        year: holidayDate.getFullYear(),
+        month: holidayDate.getMonth() + 1,
+        date: holidayDate,
+        isWeekend: isWeekend(holidayDate),
       };
     });
   }

@@ -11,7 +11,7 @@ const options: FastifyListenOptions = {
   port: appConfig.port,
 };
 
-app.get("/api/holiday/migrate", async (request, reply) => {
+app.get("/migrate/holiday", async (request, reply) => {
   const holidayMigrator = getHolidayMigrator();
   holidayMigrator.execute(2022, 100);
 });

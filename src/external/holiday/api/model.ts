@@ -1,5 +1,3 @@
-import dayjs from "dayjs";
-
 export interface GetHolidaysRequest {
   year: number;
   limit?: number;
