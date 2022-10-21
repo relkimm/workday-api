@@ -7,6 +7,7 @@ const app = fastify();
 const appConfig = AppConfig();
 
 const options: FastifyListenOptions = {
+  host: appConfig.host,
   port: appConfig.port,
 };
 

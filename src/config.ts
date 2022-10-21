@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 interface AppConfig {
+  host: string;
   port: number;
   openApi: {
     url: string;
@@ -10,6 +11,7 @@ interface AppConfig {
 }
 
 const appConfig: AppConfig = {
+  host: process.env.host || "localhost",
   port: Number(process.env.PORT) || 3000,
   openApi: {
     url: process.env.OPEN_API_URL || "",
