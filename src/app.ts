@@ -1,9 +1,11 @@
 import "./config";
 import AppConfig from "./config";
-import fastify, { FastifyListenOptions } from "fastify";
+import Fastify, { FastifyListenOptions } from "fastify";
 import { getHolidayMigrator } from "./external/holiday/service/migrator";
 
-const app = fastify();
+const app = Fastify({
+  logger: true,
+});
 const appConfig = AppConfig();
 
 const options: FastifyListenOptions = {
