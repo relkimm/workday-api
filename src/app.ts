@@ -1,7 +1,7 @@
 import "./config";
 import AppConfig from "./config";
 import Fastify, { FastifyListenOptions } from "fastify";
-import appRoutes from "./routes";
+import apiRoutes from "./api/routes";
 
 const app = Fastify({
   logger: true,
@@ -13,7 +13,7 @@ const options: FastifyListenOptions = {
   port: appConfig.port,
 };
 
-app.register(appRoutes, {
+app.register(apiRoutes, {
   prefix: "/api",
 });
 
