@@ -1,5 +1,6 @@
 import { FastifyPluginCallback } from "fastify";
 import { getWorkdayCalculator } from "../../core/workday/service/calculator";
+import { MinusRequest } from "./request/minus.request";
 import { PlusRequest } from "./request/plus.request";
 
 const workdayRoutes: FastifyPluginCallback = async (fastify, opts) => {
@@ -10,6 +11,14 @@ const workdayRoutes: FastifyPluginCallback = async (fastify, opts) => {
 
     return reply.send({
       date: calculated,
+    });
+  });
+
+  fastify.get("/minus", (request: MinusRequest, reply) => {
+    const { date, minus } = request.query;
+
+    return reply.send({
+      date: date,
     });
   });
 };
