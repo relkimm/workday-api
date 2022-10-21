@@ -1,7 +1,7 @@
 import "./config";
 import AppConfig from "./config";
 import Fastify, { FastifyListenOptions } from "fastify";
-import { getHolidayMigrator } from "./external/holiday/service/migrator";
+import appRoutes from "./routes";
 
 const app = Fastify({
   logger: true,
@@ -13,11 +13,14 @@ const options: FastifyListenOptions = {
   port: appConfig.port,
 };
 
-app.get("/migrate/holiday", async (request, reply) => {
-  const holidayMigrator = getHolidayMigrator();
-  holidayMigrator.execute(2022, 100);
+app.register(appRoutes, {
+  prefix: "/api",
 });
 
 app.listen(options, (error, address) => {
-  console.log(`App is running on ${options.host}:${options.port}`);
+  if (error) {
+    app.log.error(error);
+    process.exit(1);
+  }
+  console.log(`App is running on ${address}`);
 });
