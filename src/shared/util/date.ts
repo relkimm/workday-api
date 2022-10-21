@@ -10,3 +10,9 @@ export function plusDays(date: Date, days: number) {
   next.setDate(date.getDate() + days);
   return next;
 }
+
+export function minusDays(date: Date, days: number) {
+  const next = new Date(date);
+  next.setDate(date.getDate() - days);
+  return next;
+}

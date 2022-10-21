@@ -16,9 +16,11 @@ const workdayRoutes: FastifyPluginCallback = async (fastify, opts) => {
 
   fastify.get("/minus", (request: MinusRequest, reply) => {
     const { date, minus } = request.query;
+    const workdayCalculator = getWorkdayCalculator();
+    const calculated = workdayCalculator.minus(new Date(date), Number(minus));
 
     return reply.send({
-      date: date,
+      date: calculated,
     });
   });
 };
