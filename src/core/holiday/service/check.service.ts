@@ -1,10 +1,10 @@
 import { isSameDate } from "../../../shared/util/date";
+import { getHolidayCacher, HolidayCacher } from "./cacher";
 import { HolidayChecker } from "./checker";
-import { getHolidayReader, HolidayReader } from "./reader";
 
-function HolidayCheckService(holidayReader: HolidayReader): HolidayChecker {
+function HolidayCheckService(HolidayCacher: HolidayCacher): HolidayChecker {
   async function isHoliday(date: Date): Promise<boolean> {
-    const holidays = await holidayReader.get();
+    const holidays = await HolidayCacher.get();
     return holidays.some((holiday) => isSameDate(holiday.date, date));
   }
 
@@ -13,8 +13,8 @@ function HolidayCheckService(holidayReader: HolidayReader): HolidayChecker {
   };
 }
 
-const holidayReader = getHolidayReader();
-const holidayCheckService = HolidayCheckService(holidayReader);
+const holidayCacher = getHolidayCacher();
+const holidayCheckService = HolidayCheckService(holidayCacher);
 
 export function getHoldiayCheckService() {
   return holidayCheckService;

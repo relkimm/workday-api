@@ -1,13 +1,14 @@
 import { Holiday } from "@prisma/client";
+import { HolidayCacher } from "./cacher";
 import { getHolidayReadService } from "./read.service";
 import { HolidayReader } from "./reader";
 
-function HolidayCacheService(readService: HolidayReader): HolidayReader {
+function HolidayCacheService(holidayReader: HolidayReader): HolidayCacher {
   let cache: Holiday[];
 
   async function get(): Promise<Holiday[]> {
     if (cache === undefined) {
-      const holidays = await readService.get();
+      const holidays = await holidayReader.get();
       cache = holidays;
     }
     return cache;
