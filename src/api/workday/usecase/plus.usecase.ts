@@ -20,16 +20,16 @@ export function WorkdayPlusUseCase(
     let willPlusDays = days;
 
     for (let i = 1; i < days; i++) {
-      const current = new Date(date.getDate() + i);
+      const current = workdayCalculator.plus(date, i);
       const isWeekend = weekendChecker.isWeekend(current);
       if (isWeekend) {
-        willPlusDays++;
+        ++willPlusDays;
         continue;
       }
 
-      const isHoliday = await holidayChecker.isHoliday(date);
+      const isHoliday = await holidayChecker.isHoliday(current);
       if (isHoliday) {
-        willPlusDays++;
+        ++willPlusDays;
         continue;
       }
     }
