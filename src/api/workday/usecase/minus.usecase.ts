@@ -7,12 +7,12 @@ import {
   WeekendChecker,
 } from "../../../core/weekend/service/checker";
 import {
-  getWorkdayCalculator,
-  WorkdayCalculator,
-} from "../../../core/workday/service/calculator";
+  getDateCalculator,
+  DateCalculator,
+} from "../../../core/date/service/calculator";
 
 function WorkdayMinusUseCase(
-  workdayCalculator: WorkdayCalculator,
+  dateCalculator: DateCalculator,
   weekendChecker: WeekendChecker,
   holidayChecker: HolidayChecker
 ) {
@@ -20,7 +20,7 @@ function WorkdayMinusUseCase(
     let willMinusDays = days;
 
     for (let i = 1; i < days; i++) {
-      const current = workdayCalculator.minus(date, i);
+      const current = dateCalculator.minus(date, i);
       const isWeekend = weekendChecker.isWeekend(current);
       if (isWeekend) {
         ++willMinusDays;
@@ -36,7 +36,7 @@ function WorkdayMinusUseCase(
       }
     }
 
-    return workdayCalculator.minus(date, willMinusDays);
+    return dateCalculator.minus(date, willMinusDays);
   }
 
   return {
@@ -44,11 +44,11 @@ function WorkdayMinusUseCase(
   };
 }
 
-const workdayCalculator = getWorkdayCalculator();
+const dateCalculator = getDateCalculator();
 const weekendChecker = getWeekendChecker();
 const holidayChecker = getHolidayChecker();
 const workdayMinusUseCase = WorkdayMinusUseCase(
-  workdayCalculator,
+  dateCalculator,
   weekendChecker,
   holidayChecker
 );

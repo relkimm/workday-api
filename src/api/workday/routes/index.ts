@@ -8,26 +8,26 @@ const workdayRoutes: FastifyPluginCallback = async (fastify, opts) => {
   fastify.get("/plus", async (request: PlusRequest, reply) => {
     const { date, plus } = request.query;
     const workdayPlusUseCase = getWorkdayPlusUseCase();
-    const calculated = await workdayPlusUseCase.execute(
+    const workday = await workdayPlusUseCase.execute(
       new Date(date),
       Number(plus)
     );
 
     return reply.send({
-      date: calculated,
+      date: workday,
     });
   });
 
   fastify.get("/minus", async (request: MinusRequest, reply) => {
     const { date, minus } = request.query;
     const workdayMinusUseCase = getWorkdayMinusUseCase();
-    const calculated = await workdayMinusUseCase.execute(
+    const workday = await workdayMinusUseCase.execute(
       new Date(date),
       Number(minus)
     );
 
     return reply.send({
-      date: calculated,
+      date: workday,
     });
   });
 };

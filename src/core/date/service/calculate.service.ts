@@ -1,6 +1,6 @@
-import { WorkdayCalculator } from "./calculator";
+import { DateCalculator } from "./calculator";
 
-function WorkdayCalculateService(): WorkdayCalculator {
+function DateCalculateService(): DateCalculator {
   function plus(date: Date, days: number): Date {
     const next = new Date(date);
     next.setDate(date.getDate() + days);
@@ -19,8 +19,8 @@ function WorkdayCalculateService(): WorkdayCalculator {
   };
 }
 
-const workdayCalculateService = WorkdayCalculateService();
+const dateCalculateService = DateCalculateService();
 
-export function getWorkdayCalculateService() {
-  return workdayCalculateService;
+export function getDateCalculateService() {
+  return dateCalculateService;
 }
