@@ -1,13 +1,16 @@
 import { WorkdayCalculator } from "./calculator";
-import { minusDays, plusDays } from "../../../shared/util/date";
 
 function WorkdayCalculateService(): WorkdayCalculator {
   function plus(date: Date, days: number): Date {
-    return plusDays(date, days);
+    const next = new Date(date);
+    next.setDate(date.getDate() + days);
+    return next;
   }
 
   function minus(date: Date, days: number): Date {
-    return minusDays(date, days);
+    const next = new Date(date);
+    next.setDate(date.getDate() - days);
+    return next;
   }
 
   return {
