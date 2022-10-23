@@ -19,17 +19,19 @@ export function WorkdayPlusUseCase(
   async function execute(date: Date, days: number): Promise<Date> {
     let willPlusDays = days;
 
-    for (let i = 1; i < days; i++) {
+    for (let i = 1; i <= days; i++) {
       const current = workdayCalculator.plus(date, i);
       const isWeekend = weekendChecker.isWeekend(current);
       if (isWeekend) {
         ++willPlusDays;
+        ++days;
         continue;
       }
 
       const isHoliday = await holidayChecker.isHoliday(current);
       if (isHoliday) {
         ++willPlusDays;
+        ++days;
         continue;
       }
     }

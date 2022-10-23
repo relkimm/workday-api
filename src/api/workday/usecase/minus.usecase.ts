@@ -20,16 +20,18 @@ function WorkdayMinusUseCase(
     let willMinusDays = days;
 
     for (let i = 1; i < days; i++) {
-      const current = new Date(date.getDate() - i);
+      const current = workdayCalculator.minus(date, i);
       const isWeekend = weekendChecker.isWeekend(current);
       if (isWeekend) {
         ++willMinusDays;
+        ++days;
         continue;
       }
 
       const isHoliday = await holidayChecker.isHoliday(current);
       if (isHoliday) {
         ++willMinusDays;
+        ++days;
         continue;
       }
     }
