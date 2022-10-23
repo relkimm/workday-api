@@ -17,24 +17,24 @@ export function WorkdayPlusUseCase(
   holdiayChecker: HolidayChecker
 ) {
   async function execute(date: Date, days: number): Promise<void> {
-    let willAddDays = days;
+    let willPlusDays = days;
 
     for (let i = 1; i < days; i++) {
       const current = new Date(date.getDate() + i);
       const isWeekend = weekendChecker.isWeekend(current);
       if (isWeekend) {
-        willAddDays++;
+        willPlusDays++;
         continue;
       }
 
       const isHoliday = await holidayChecker.isHoliday(date);
       if (isHoliday) {
-        willAddDays++;
+        willPlusDays++;
         continue;
       }
     }
 
-    workdayCalculator.plus(date, willAddDays);
+    workdayCalculator.plus(date, willPlusDays);
   }
 
   return {
