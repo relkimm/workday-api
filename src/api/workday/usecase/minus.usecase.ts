@@ -1,13 +1,22 @@
-import { HolidayChecker } from "../../../core/holiday/service/checker";
-import { WeekendChecker } from "../../../core/weekend/service/checker";
-import { WorkdayCalculator } from "../../../core/workday/service/calculator";
+import {
+  getHolidayChecker,
+  HolidayChecker,
+} from "../../../core/holiday/service/checker";
+import {
+  getWeekendChecker,
+  WeekendChecker,
+} from "../../../core/weekend/service/checker";
+import {
+  getWorkdayCalculator,
+  WorkdayCalculator,
+} from "../../../core/workday/service/calculator";
 
-export function WorkdayMinusUseCase(
+function WorkdayMinusUseCase(
   workdayCalculator: WorkdayCalculator,
   weekendChecker: WeekendChecker,
   holidayChecker: HolidayChecker
 ) {
-  async function execute(date: Date, days: number): Promise<void> {
+  async function execute(date: Date, days: number): Promise<Date> {
     let willMinusDays = days;
 
     for (let i = 1; i < days; i++) {
@@ -25,6 +34,23 @@ export function WorkdayMinusUseCase(
       }
     }
 
-    workdayCalculator.minus(date, willMinusDays);
+    return workdayCalculator.minus(date, willMinusDays);
   }
+
+  return {
+    execute,
+  };
+}
+
+const workdayCalculator = getWorkdayCalculator();
+const weekendChecker = getWeekendChecker();
+const holidayChecker = getHolidayChecker();
+const workdayMinusUseCase = WorkdayMinusUseCase(
+  workdayCalculator,
+  weekendChecker,
+  holidayChecker
+);
+
+export function getWorkdayMinusUseCase() {
+  return workdayMinusUseCase;
 }

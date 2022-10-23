@@ -16,7 +16,7 @@ export function WorkdayPlusUseCase(
   weekendChecker: WeekendChecker,
   holdiayChecker: HolidayChecker
 ) {
-  async function execute(date: Date, days: number): Promise<void> {
+  async function execute(date: Date, days: number): Promise<Date> {
     let willPlusDays = days;
 
     for (let i = 1; i < days; i++) {
@@ -34,7 +34,7 @@ export function WorkdayPlusUseCase(
       }
     }
 
-    workdayCalculator.plus(date, willPlusDays);
+    return workdayCalculator.plus(date, willPlusDays);
   }
 
   return {
