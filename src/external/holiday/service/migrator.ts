@@ -1,42 +1,27 @@
-import { Holiday, PrismaClient } from "@prisma/client";
+import { Holiday } from "../../../core/holiday/entity/holiday";
+import {
+  getHolidayRepository,
+  HolidayRepository,
+} from "../../../core/holiday/entity/repository/holiday";
 import { CreateData } from "../../../shared/type/prisma";
 import { isWeekend } from "../../../shared/util/date";
-import { getHolidayClient } from "../api";
+import { getHolidayApi, HolidayApi } from "../api";
 import { HolidayItemResponse, parseLocdate } from "../api/model";
 
-function HolidayMigrator() {
-  const prisma = new PrismaClient();
-  const holidayClient = getHolidayClient();
-
+function HolidayMigrator(
+  holidayApi: HolidayApi,
+  holidayRepository: HolidayRepository
+) {
   function execute(year: number, limit: number) {
-    holidayClient
+    holidayApi
       .getHolidays({
         year,
         limit,
       })
-      .then(async (response) => {
+      .then((response) => {
         const { item } = response.response.body.items;
         const createData = getCreateData(item);
-
-        prisma.holiday
-          .createMany({
-            data: createData,
-            skipDuplicates: true,
-          })
-          .then((result) => {
-            console.info(
-              "Migration of Holiday Data is Success.",
-              "result:",
-              result
-            );
-          })
-          .catch((error) => {
-            console.error(
-              "Migration of Holiday Data is Failed.",
-              "error:",
-              error
-            );
-          });
+        holidayRepository.saveAll(createData);
       });
   }
 
@@ -60,8 +45,10 @@ function HolidayMigrator() {
   };
 }
 
-const hilidayMigrator = HolidayMigrator();
+const holidayApi = getHolidayApi();
+const holidayRepository = getHolidayRepository();
+const holidayMigrator = HolidayMigrator(holidayApi, holidayRepository);
 
 export function getHolidayMigrator() {
-  return hilidayMigrator;
+  return holidayMigrator;
 }

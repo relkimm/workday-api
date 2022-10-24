@@ -2,7 +2,7 @@ import axios from "axios";
 import AppConfig from "../../../config";
 import { GetHolidaysRequest, GetHolidaysResponse } from "./model";
 
-interface HolidayApi {
+export interface HolidayApi {
   getHolidays: (request: GetHolidaysRequest) => Promise<GetHolidaysResponse>;
 }
 
@@ -35,6 +35,6 @@ function HolidayClient(): HolidayApi {
 
 const holidayClient = HolidayClient();
 
-export function getHolidayClient() {
+export function getHolidayApi() {
   return holidayClient;
 }
