@@ -1,11 +1,15 @@
-import { Holiday, PrismaClient } from "@prisma/client";
+import { Holiday } from "../entity/holiday";
+import {
+  getHolidayRepository,
+  HolidayRepository,
+} from "../entity/repository/holiday";
 import { HolidayReader } from "./reader";
 
-function HolidayReadService(): HolidayReader {
-  const prisma = new PrismaClient();
-
+function HolidayReadService(
+  holidayRepository: HolidayRepository
+): HolidayReader {
   async function get(): Promise<Holiday[]> {
-    return prisma.holiday.findMany();
+    return holidayRepository.findAll();
   }
 
   return {
@@ -13,7 +17,8 @@ function HolidayReadService(): HolidayReader {
   };
 }
 
-const holidayReadService = HolidayReadService();
+const holidayRepository = getHolidayRepository();
+const holidayReadService = HolidayReadService(holidayRepository);
 
 export function getHolidayReadService() {
   return holidayReadService;

@@ -1,4 +1,4 @@
-import { Holiday } from "@prisma/client";
+import { Holiday } from "../entity/holiday";
 import { getHolidayReadService } from "./read.service";
 
 export interface HolidayReader {
