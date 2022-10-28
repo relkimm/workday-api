@@ -1,4 +1,3 @@
-import { Holiday } from "../../../../src/core/holiday/entity/holiday";
 import { getHolidayRepository } from "../../../../src/core/holiday/entity/repository/holiday";
 import { HolidayReadService } from "../../../../src/core/holiday/service/read.service";
 import { HolidayFixture } from "../fixture/holiday.fixture";
