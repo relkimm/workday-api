@@ -5,7 +5,7 @@ import {
 } from "../entity/repository/holiday";
 import { HolidayReader } from "./reader";
 
-function HolidayReadService(
+export function HolidayReadService(
   holidayRepository: HolidayRepository
 ): HolidayReader {
   async function get(): Promise<Holiday[]> {

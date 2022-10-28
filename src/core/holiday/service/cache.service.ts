@@ -3,7 +3,9 @@ import { HolidayCacher } from "./cacher";
 import { getHolidayReadService } from "./read.service";
 import { HolidayReader } from "./reader";
 
-function HolidayCacheService(holidayReader: HolidayReader): HolidayCacher {
+export function HolidayCacheService(
+  holidayReader: HolidayReader
+): HolidayCacher {
   let cache: Holiday[];
 
   async function get(): Promise<Holiday[]> {
