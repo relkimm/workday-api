@@ -3,8 +3,8 @@ import { HolidayCacheSpy } from "../double/cache.spy";
 
 describe("HolidayCheckService", () => {
   describe("isHoliday 함수는", () => {
-    const holidayCacher = HolidayCacheSpy();
-    const sut = HolidayCheckService(holidayCacher);
+    const holidayCacheSpy = HolidayCacheSpy();
+    const sut = HolidayCheckService(holidayCacheSpy);
 
     test("공휴일인 경우, true 를 반환한다.", () => {
       // given
