@@ -12,8 +12,12 @@ export function HolidayCacheSpy(): HolidayCacher {
   }
 
   async function getByYear(year: number): Promise<Holiday[]> {
-    // Not yet implemented
-    return [];
+    return new Promise((resolve, reject) => {
+      const holidaysOfYear = holidays.filter(
+        (holiday) => holiday.year === year
+      );
+      resolve(holidaysOfYear);
+    });
   }
 
   return {

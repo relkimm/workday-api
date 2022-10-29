@@ -6,7 +6,8 @@ export function HolidayCheckService(
   HolidayCacher: HolidayCacher
 ): HolidayChecker {
   async function isHoliday(date: Date): Promise<boolean> {
-    const holidays = await HolidayCacher.get();
+    const year = date.getFullYear();
+    const holidays = await HolidayCacher.getByYear(year);
     return holidays.some((holiday) => isSameDate(holiday.date, date));
   }
 
