@@ -3,7 +3,7 @@ import {
   getHolidayRepository,
   HolidayRepository,
 } from "../../../core/holiday/entity/repository/holiday";
-import { CreateData } from "../../../shared/type/prisma";
+import { CreateData } from "../../../infra/prisma/type";
 import { isWeekend } from "../../../shared/util/date";
 import { getHolidayApi, HolidayApi } from "../api";
 import { HolidayItemResponse, parseLocdate } from "../api/model";
