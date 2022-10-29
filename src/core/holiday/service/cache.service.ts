@@ -3,36 +3,37 @@ import { HolidayCacher } from "./cacher";
 import { getHolidayReadService } from "./read.service";
 import { HolidayReader } from "./reader";
 
-type HolidayCache = Record<number, Holiday[]>;
+type ByYearCache = Record<number, Holiday[]>;
 
 export function HolidayCacheService(
   holidayReader: HolidayReader
 ): HolidayCacher {
-  let cache: HolidayCache;
+  let allYearCache: Holiday[];
+  let byYearCache: ByYearCache;
 
   async function get(): Promise<Holiday[]> {
-    if (cache === undefined) {
-      await fillCache();
+    if (allYearCache === undefined) {
+      await fillAllYearCache();
     }
-
-    return Object.keys(cache).reduce<Holiday[]>((holidays, key) => {
-      const numberKey = Number(key);
-      const holidaysOfYear = cache[numberKey];
-      return holidays.concat(holidaysOfYear);
-    }, []);
+    return allYearCache;
   }
 
   async function getByYear(year: number): Promise<Holiday[]> {
-    if (cache === undefined) {
-      await fillCache();
+    if (byYearCache === undefined) {
+      await fillByYearCache();
     }
-    const holidaysOfYear = cache[year];
+    const holidaysOfYear = byYearCache[year];
     return holidaysOfYear || [];
   }
 
-  async function fillCache() {
+  async function fillAllYearCache() {
     const holidays = await holidayReader.get();
-    cache = holidays.reduce<HolidayCache>((cache, holiday) => {
+    allYearCache = holidays;
+  }
+
+  async function fillByYearCache() {
+    const holidays = await holidayReader.get();
+    byYearCache = holidays.reduce<ByYearCache>((cache, holiday) => {
       const holidaysOfYear = cache[holiday.year];
       if (holidaysOfYear === undefined) {
         cache[holiday.year] = [holiday];
