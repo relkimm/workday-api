@@ -1,11 +1,11 @@
-import { PrismaClient } from "@prisma/client";
 import { Holiday } from "../../../../src/core/holiday/entity/holiday";
 import { HolidayPrismaRepository } from "../../../../src/core/holiday/entity/repository/holiday.repository";
-import { CreateData } from "../../../../src/shared/type/prisma";
+import { getPrismaClient } from "../../../../src/infra/prisma/client";
+import { CreateData } from "../../../../src/infra/prisma/type";
 import { HolidayFixture } from "../fixture/holiday.fixture";
 
 describe("HolidayPrismaRepository", () => {
-  const prisma = new PrismaClient();
+  const prisma = getPrismaClient();
 
   afterEach(async () => {
     await prisma.holiday.deleteMany({});

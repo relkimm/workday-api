@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client";
-import { CreateData } from "../../../../shared/type/prisma";
+import { getPrismaClient } from "../../../../infra/prisma/client";
+import { CreateData } from "../../../../infra/prisma/type";
 import { Holiday } from "../holiday";
 import { HolidayRepository } from "./holiday";
 
 export function HolidayPrismaRepository(): HolidayRepository {
-  const prisma = new PrismaClient();
+  const prisma = getPrismaClient();
 
   function findAll(): Promise<Holiday[]> {
     return prisma.holiday.findMany();

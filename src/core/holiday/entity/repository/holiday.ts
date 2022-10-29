@@ -1,4 +1,4 @@
-import { CreateData } from "../../../../shared/type/prisma";
+import { CreateData } from "../../../../infra/prisma/type";
 import { Holiday } from "../holiday";
 import { getHolidayPrismaRepository } from "./holiday.repository";
 
