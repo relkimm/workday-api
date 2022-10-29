@@ -11,7 +11,13 @@ export function HolidayCacheSpy(): HolidayCacher {
     });
   }
 
+  async function getByYear(year: number): Promise<Holiday[]> {
+    // Not yet implemented
+    return [];
+  }
+
   return {
     get,
+    getByYear,
   };
 }
