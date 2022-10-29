@@ -6,8 +6,8 @@
   "scripts": {
     "start": "ts-node src/app.ts",
     "start:dev": "nodemon --watch src/ --exec ts-node src/app.ts",
-    "migrate": "npx dotenv -e .env npx prisma migrate dev",
-    "migrate:test": "npx dotenv -e test.env npx prisma migrate dev",
+    "migrate": "npx dotenv -e .env npx -- prisma migrate dev",
+    "migrate:test": "npx dotenv -e test.env -- npx prisma migrate reset --force",
     "pretest": "npm run migrate:test",
     "test": "jest"
   },
