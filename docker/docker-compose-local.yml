@@ -10,3 +10,13 @@ services:
       - POSTGRES_INITDB_ARGS=--encoding=UTF-8
     ports:
       - "5432:5432"
+  testDB:
+    image: postgres
+    container_name: workday-api-test-postgres
+    environment:
+      - POSTGRES_DB=test-workday
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+    ports:
+      - "5555:5432"
